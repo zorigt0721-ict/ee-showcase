@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBDP Extended Essay Showcase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ========== Reset & Base ========== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy: #0f1b3d;
+            --blue: #1a56db;
+            --blue-light: #3b82f6;
+            --sky: #dbeafe;
+            --accent: #f59e0b;
+            --accent-hover: #d97706;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-400: #94a3b8;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1);
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--gray-800);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: var(--white);
+        }
+
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; line-height: 1.2; }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Scroll Animations ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ========== Navigation ========== */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--gray-200);
+            transition: box-shadow 0.3s;
+        }
+        nav.scrolled { box-shadow: var(--shadow); }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--navy);
+        }
+        .nav-logo { display: flex; align-items: center; gap: 10px; }
+        .nav-logo-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+        .nav-logo span { color: var(--blue); }
+        .hero-logo {
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255,255,255,0.2);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .nav-links { display: flex; gap: 28px; }
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            transition: color 0.2s;
+            position: relative;
+        }
+        .nav-links a:hover { color: var(--blue); }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 2px;
+            background: var(--blue);
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none; border: none; padding: 8px;
+        }
+        .nav-toggle span {
+            display: block; width: 24px; height: 2px;
+            background: var(--gray-800);
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        /* ========== Hero Section ========== */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--navy) 0%, #1e3a6e 50%, var(--blue) 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+            padding: 80px 24px 60px;
+        }
+        .hero-bg-shapes {
+            position: absolute; inset: 0;
+            overflow: hidden; pointer-events: none;
+        }
+        .hero-bg-shapes .circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.06;
+            background: var(--white);
+        }
+        .hero-bg-shapes .c1 { width: 500px; height: 500px; top: -100px; right: -100px; }
+        .hero-bg-shapes .c2 { width: 300px; height: 300px; bottom: -50px; left: -80px; }
+        .hero-bg-shapes .c3 { width: 200px; height: 200px; top: 40%; left: 60%; }
+
+        .hero-content { position: relative; z-index: 1; max-width: 800px; }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+        .hero-content h1 {
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        .roller-wrap {
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            vertical-align: bottom;
+            height: 1.15em;
+        }
+        .roller-track {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.6s cubic-bezier(.68,-.35,.27,1.35);
+        }
+        .roller-word {
+            height: 1.15em;
+            display: flex;
+            align-items: center;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 12px;
+            font-weight: 300;
+            max-width: 600px;
+            margin-left: auto; margin-right: auto;
+        }
+        .typing-line {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 500;
+            height: 1.6em;
+            margin-bottom: 36px;
+        }
+        .typing-cursor {
+            display: inline-block;
+            width: 2px; height: 1.1em;
+            background: var(--accent);
+            vertical-align: text-bottom;
+            animation: blink 0.8s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn:active { transform: translateY(0); }
+        .btn-primary {
+            background: var(--accent);
+            color: var(--navy);
+            box-shadow: 0 4px 14px rgba(245,158,11,0.4);
+        }
+        .btn-primary:hover { background: var(--accent-hover); box-shadow: 0 6px 20px rgba(245,158,11,0.5); }
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.4);
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.7); }
+
+        .scroll-arrow {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 1;
+        }
+        .scroll-arrow svg { width: 32px; height: 32px; stroke: rgba(255,255,255,0.5); }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-12px); }
+            60% { transform: translateX(-50%) translateY(-6px); }
+        }
+
+        /* ========== Section Shared ========== */
+        section { padding: 100px 0; }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-header h2 {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            color: var(--navy);
+            margin-bottom: 16px;
+        }
+        .section-header p {
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+        .section-divider {
+            width: 60px; height: 4px;
+            background: var(--blue);
+            border-radius: 2px;
+            margin: 16px auto 0;
+        }
+
+        /* ========== About EE ========== */
+        #about { background: var(--gray-50); }
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+        }
+        .about-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .about-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); }
+        .about-icon {
+            width: 64px; height: 64px;
+            background: var(--sky);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .about-icon svg { width: 28px; height: 28px; stroke: var(--blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .about-card h3 { font-size: 1.15rem; margin-bottom: 10px; color: var(--navy); }
+        .about-card p { font-size: 0.92rem; color: var(--gray-600); }
+
+        .about-bullets {
+            margin-top: 48px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .about-bullet {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--blue);
+        }
+        .about-bullet .check {
+            flex-shrink: 0;
+            width: 24px; height: 24px;
+            background: var(--sky);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 2px;
+        }
+        .about-bullet .check svg { width: 14px; height: 14px; stroke: var(--blue); fill: none; stroke-width: 3; }
+        .about-bullet p { font-size: 0.93rem; color: var(--gray-700); }
+
+        /* ========== Subjects Grid ========== */
+        #subjects { background: var(--white); }
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
+        }
+        .subject-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 36px 24px;
+            text-align: center;
+            border: 1px solid var(--gray-200);
+            transition: transform 0.35s cubic-bezier(.17,.67,.35,1.2), box-shadow 0.35s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            transition: height 0.3s;
+        }
+        .subject-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: var(--shadow-xl); }
+        .subject-card:hover::before { height: 6px; }
+
+        .subject-card.mongolian::before { background: var(--accent); }
+        .subject-card.english::before { background: #10b981; }
+        .subject-card.business::before { background: #8b5cf6; }
+        .subject-card.biology::before { background: #ef4444; }
+
+        .subject-emoji { font-size: 2.5rem; margin-bottom: 16px; display: block; }
+        .subject-card h3 { font-size: 1.2rem; color: var(--navy); margin-bottom: 10px; }
+        .subject-card p { font-size: 0.88rem; color: var(--gray-600); margin-bottom: 20px; line-height: 1.5; }
+        .btn-card {
+            display: inline-block;
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--white);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .mongolian .btn-card { background: var(--accent); }
+        .english .btn-card { background: #10b981; }
+        .business .btn-card { background: #8b5cf6; }
+        .biology .btn-card { background: #ef4444; }
+
+        /* ========== Detailed Subject Sections ========== */
+        .subject-detail { padding: 80px 0; }
+        .subject-detail:nth-child(even) { background: var(--gray-50); }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .detail-header .emoji { font-size: 2rem; }
+        .detail-header h2 {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            color: var(--navy);
+        }
+        .detail-intro {
+            font-size: 1rem;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        .rq-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .rq-label .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .rq-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        .rq-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 24px;
+            border-left: 4px solid;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .rq-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .rq-card .rq-num {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .rq-card p {
+            font-size: 0.93rem;
+            color: var(--gray-700);
+            font-style: italic;
+            line-height: 1.6;
+        }
+        .rq-card details {
+            margin-top: 14px;
+            border-top: 1px solid var(--gray-200);
+            padding-top: 12px;
+        }
+        .rq-card summary {
+            font-size: 0.82rem;
+            font-weight: 600;
+            font-style: normal;
+            color: var(--gray-600);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            user-select: none;
+            transition: color 0.2s;
+        }
+        .rq-card summary:hover { color: var(--blue); }
+        .rq-card summary::marker { content: ''; }
+        .rq-card summary::-webkit-details-marker { display: none; }
+        .rq-card summary .arrow {
+            display: inline-block;
+            transition: transform 0.3s;
+            font-size: 0.7rem;
+        }
+        .rq-card details[open] summary .arrow { transform: rotate(90deg); }
+        .ee-structure {
+            margin-top: 12px;
+            font-style: normal;
+            display: block;
+            width: 100%;
+        }
+        .ee-structure ol {
+            list-style: none;
+            counter-reset: struct;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .ee-structure li {
+            counter-increment: struct;
+            position: relative;
+            padding: 8px 0 8px 36px;
+            font-size: 0.83rem;
+            color: var(--gray-700);
+            line-height: 1.5;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        .ee-structure li:last-child { border-bottom: none; }
+        .ee-structure li::before {
+            content: counter(struct);
+            position: absolute;
+            left: 0;
+            top: 9px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--sky);
+            color: var(--blue);
+            font-size: 0.72rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ee-structure li strong {
+            color: var(--navy);
+        }
+
+        .mongolian-color { color: var(--accent); }
+        .english-color { color: #10b981; }
+        .business-color { color: #8b5cf6; }
+        .biology-color { color: #ef4444; }
+        .border-mongolian { border-color: var(--accent); }
+        .border-english { border-color: #10b981; }
+        .border-business { border-color: #8b5cf6; }
+        .border-biology { border-color: #ef4444; }
+        .bg-mongolian { background: var(--accent); }
+        .bg-english { background: #10b981; }
+        .bg-business { background: #8b5cf6; }
+        .bg-biology { background: #ef4444; }
+
+        .checklist-mini {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .checklist-mini h4 {
+            font-size: 1rem;
+            color: var(--navy);
+            margin-bottom: 16px;
+        }
+        .checklist-mini li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: var(--gray-700);
+        }
+        .checklist-mini li svg {
+            flex-shrink: 0;
+            width: 18px; height: 18px;
+            margin-top: 2px;
+        }
+
+        /* ========== General Checklist ========== */
+        #checklist { background: linear-gradient(135deg, var(--navy), #1e3a6e); color: var(--white); }
+        #checklist .section-header h2 { color: var(--white); }
+        #checklist .section-header p { color: rgba(255,255,255,0.7); }
+        #checklist .section-divider { background: var(--accent); }
+
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        .checklist-item {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .checklist-item:hover { background: rgba(255,255,255,0.14); transform: translateY(-3px); }
+        .checklist-icon {
+            flex-shrink: 0;
+            width: 48px; height: 48px;
+            background: rgba(245,158,11,0.15);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .checklist-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 2; }
+        .checklist-item h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .checklist-item p { font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
+
+        /* ========== Footer ========== */
+        footer {
+            background: var(--gray-800);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 0.88rem;
+        }
+        footer strong { color: var(--white); font-weight: 600; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 900px) {
+            .subjects-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 64px; left: 0; right: 0;
+                background: var(--white);
+                padding: 20px 24px;
+                box-shadow: var(--shadow-lg);
+                gap: 16px;
+            }
+            .nav-toggle { display: flex; }
+            .about-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .subjects-grid { grid-template-columns: 1fr; }
+            section { padding: 60px 0; }
+            .subject-detail { padding: 50px 0; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .hero-logo { width: 90px; height: 90px; }
+            .hero-content h1 { font-size: 1.8rem; }
+            .roller-word { font-size: inherit; }
+            .rq-grid { max-width: 100%; padding: 0; }
+            .rq-card { padding: 18px 16px; }
+            .ee-structure li { padding-left: 32px; font-size: 0.8rem; }
+            .checklist-grid { grid-template-columns: 1fr; }
+            .about-grid { grid-template-columns: 1fr; }
+            .about-bullets { grid-template-columns: 1fr; }
+            .detail-header { flex-direction: column; gap: 8px; text-align: center; }
+            .checklist-mini { padding: 20px 16px; }
+            .checklist-mini li { font-size: 0.85rem; }
+            .nav-logo-img { width: 32px; height: 32px; }
+            .hero-badge { font-size: 0.75rem; padding: 6px 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==================== Navigation ==================== -->
+<nav id="navbar">
+    <div class="container nav-inner">
+        <a href="#hero" class="nav-logo">
+            <img src="engschoollogo.png" alt="Shine UE School" class="nav-logo-img">
+            EE <span>Showcase</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="#about">About EE</a>
+            <a href="#subjects">Subjects</a>
+            <a href="#mongolian">Mongolian A</a>
+            <a href="#english">English B</a>
+            <a href="#business">Business</a>
+            <a href="#biology">Biology</a>
+            <a href="#checklist">Checklist</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- ==================== Hero Section ==================== -->
+<section id="hero">
+    <div class="hero-bg-shapes">
+        <div class="circle c1"></div>
+        <div class="circle c2"></div>
+        <div class="circle c3"></div>
+    </div>
+    <div class="hero-content">
+        <img src="engschoollogo.png" alt="Shine UE School" class="hero-logo">
+        <div class="hero-badge">International Baccalaureate Diploma Programme</div>
+        <h1>IBDP Extended Essay<br>
+            <span class="roller-wrap">
+                <span class="roller-track" id="rollerTrack">
+                    <span class="roller-word">Showcase</span>
+                    <span class="roller-word">Research</span>
+                    <span class="roller-word">Excellence</span>
+                    <span class="roller-word">Discovery</span>
+                </span>
+            </span>
+        </h1>
+        <p class="hero-subtitle">
+            The Extended Essay is a 4,000-word independent research paper — a cornerstone of the IB Diploma that develops critical thinking, academic writing, and intellectual discovery.
+        </p>
+        <div class="typing-line" id="typingLine"><span class="typing-cursor"></span></div>
+        <div class="hero-buttons">
+            <a href="#subjects" class="btn btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                Explore Subjects
+            </a>
+            <a href="#about" class="btn btn-outline">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg>
+                About EE
+            </a>
+        </div>
+    </div>
+    <a href="#about" class="scroll-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+        </svg>
+    </a>
+</section>
+
+<!-- ==================== About EE Section ==================== -->
+<section id="about">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>What is the Extended Essay?</h2>
+            <p>A deep dive into independent academic research — one of the core components of the IB Diploma Programme.</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-card reveal reveal-delay-1">
+                <div class="about-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                </div>
+                <h3>Research Question</h3>
+                <p>Students formulate a clear, focused, and analytically driven research question in a subject of their choice.</p>
+            </div>
+            <div class="about-card reveal reveal-delay-2">
+                <div class="about-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </div>
+                <h3>Methodology</h3>
+                <p>Applying appropriate research methods — from literary analysis to controlled experiments — to investigate the question.</p>
+            </div>
+            <div class="about-card reveal reveal-delay-3">
+                <div class="about-icon">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </div>
+                <h3>Analysis</h3>
+                <p>Critical analysis and evaluation of evidence, data, or texts to build a coherent and well-supported argument.</p>
+            </div>
+            <div class="about-card reveal reveal-delay-4">
+                <div class="about-icon">
+                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </div>
+                <h3>Reflection</h3>
+                <p>Documenting the research journey through structured reflections that show intellectual growth and self-awareness.</p>
+            </div>
+        </div>
+
+        <div class="about-bullets reveal">
+            <div class="about-bullet">
+                <div class="check"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <p><strong>4,000 words</strong> — a focused, in-depth piece of independent academic research.</p>
+            </div>
+            <div class="about-bullet">
+                <div class="check"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <p><strong>Independent research</strong> — students choose their own topic, guided by a supervisor.</p>
+            </div>
+            <div class="about-bullet">
+                <div class="check"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <p><strong>Grade A criteria</strong> — clarity of research question, rigorous analysis, logical structure, and genuine reflection.</p>
+            </div>
+            <div class="about-bullet">
+                <div class="check"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <p><strong>Core component</strong> — contributes up to 3 bonus points alongside Theory of Knowledge (TOK).</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== Subjects Overview ==================== -->
+<section id="subjects">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>Explore Our Grade A Essays</h2>
+            <p>Four subjects, four outstanding Extended Essays. Discover what excellence looks like across different disciplines.</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="subjects-grid">
+            <div class="subject-card mongolian reveal reveal-delay-1">
+                <span class="subject-emoji">📖</span>
+                <h3>Mongolian A</h3>
+                <p>Literary analysis of Mongolian texts — exploring themes of identity, cultural heritage, poetic form, and dramatic structure.</p>
+                <a href="#mongolian" class="btn-card">View Examples →</a>
+            </div>
+            <div class="subject-card english reveal reveal-delay-2">
+                <span class="subject-emoji">🌍</span>
+                <h3>English B</h3>
+                <p>Language and culture investigations — examining media, translation, sociolinguistics, and cross-cultural communication.</p>
+                <a href="#english" class="btn-card">View Examples →</a>
+            </div>
+            <div class="subject-card business reveal reveal-delay-3">
+                <span class="subject-emoji">📊</span>
+                <h3>Business Management</h3>
+                <p>Real-world business case studies — analyzing financial performance, marketing strategies, and organizational decisions.</p>
+                <a href="#business" class="btn-card">View Examples →</a>
+            </div>
+            <div class="subject-card biology reveal reveal-delay-4">
+                <span class="subject-emoji">🔬</span>
+                <h3>Biology</h3>
+                <p>Controlled experiments and data-driven investigations — testing hypotheses with measurable variables and rigorous methodology.</p>
+                <a href="#biology" class="btn-card">View Examples →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== Mongolian A Detail ==================== -->
+<div id="mongolian" class="subject-detail">
+    <div class="container">
+        <div class="detail-header reveal">
+            <span class="emoji">📖</span>
+            <h2>Mongolian A — Language & Literature</h2>
+        </div>
+        <p class="detail-intro reveal">
+            A strong Mongolian A Extended Essay engages deeply with literary texts — whether novels, poetry, drama, or non-fiction — and explores how language, form, and cultural context shape meaning. The best essays combine close textual analysis with a clear interpretive argument rooted in Mongolian literary tradition.
+        </p>
+
+        <div class="rq-label reveal mongolian-color">
+            <span class="dot bg-mongolian"></span> Example Research Questions
+        </div>
+        <div class="rq-grid">
+            <div class="rq-card border-mongolian reveal reveal-delay-1">
+                <div class="rq-num mongolian-color">RQ 1 — Literary Analysis</div>
+                <p>"How does D. Natsagdorj use imagery and symbolism in <em>My Homeland</em> to construct a sense of Mongolian national identity?"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> Context on Natsagdorj, significance of <em>My Homeland</em>, thesis statement on imagery &amp; national identity</li>
+                        <li><strong>Literary Context:</strong> Historical background of Mongolian literary nationalism in the early 20th century</li>
+                        <li><strong>Analysis — Imagery:</strong> Close reading of nature imagery (steppe, sky, rivers) and its symbolic meaning</li>
+                        <li><strong>Analysis — Symbolism:</strong> Examination of recurring symbols and how they construct collective identity</li>
+                        <li><strong>Comparative Lens:</strong> Brief comparison with another Natsagdorj work to strengthen the argument</li>
+                        <li><strong>Conclusion:</strong> How imagery and symbolism together build a vision of national identity; reflection on limitations</li>
+                    </ol></div>
+                </details>
+            </div>
+            <div class="rq-card border-mongolian reveal reveal-delay-2">
+                <div class="rq-num mongolian-color">RQ 2 — Drama</div>
+                <p>"To what extent does the character development in B. Lkhagvasuren's <em>The Grey Horse</em> reflect the tension between tradition and modernity in Mongolian society?"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> Research question, context of the play, thesis on tradition vs. modernity</li>
+                        <li><strong>Background:</strong> Mongolian dramatic tradition and the socio-political context of the play</li>
+                        <li><strong>Analysis — Traditional Characters:</strong> How characters embody nomadic values, customs, and beliefs</li>
+                        <li><strong>Analysis — Modern Characters:</strong> How opposing characters represent urbanization, change, and conflict</li>
+                        <li><strong>Analysis — Resolution:</strong> How character arcs resolve or leave unresolved the tradition–modernity tension</li>
+                        <li><strong>Conclusion:</strong> Evaluation of the extent of the reflection; connection to broader Mongolian cultural debate</li>
+                    </ol></div>
+                </details>
+            </div>
+            <div class="rq-card border-mongolian reveal reveal-delay-3">
+                <div class="rq-num mongolian-color">RQ 3 — Translation</div>
+                <p>"How do English translations of S. Erdene's short stories alter the cultural nuances present in the original Mongolian texts?"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> RQ, rationale for studying translation loss, selection of 2–3 short stories</li>
+                        <li><strong>Theoretical Framework:</strong> Key translation theory concepts (equivalence, domestication vs. foreignization)</li>
+                        <li><strong>Analysis — Story 1:</strong> Side-by-side comparison of culturally specific language and its English rendering</li>
+                        <li><strong>Analysis — Story 2:</strong> Examination of idiomatic expressions, proverbs, and tone shifts in translation</li>
+                        <li><strong>Discussion:</strong> Patterns of cultural loss or adaptation across the selected texts</li>
+                        <li><strong>Conclusion:</strong> Summary of how translations alter nuance; implications for cross-cultural literary exchange</li>
+                    </ol></div>
+                </details>
+            </div>
+            <div class="rq-card border-mongolian reveal reveal-delay-4">
+                <div class="rq-num mongolian-color">RQ 4 — Poetry</div>
+                <p>"In what ways does Ch. Chimid use poetic structure and diction to explore the theme of loss in his collection <em>Echoes of the Steppe</em>?"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> Context on Ch. Chimid, thesis on how form and word choice convey loss</li>
+                        <li><strong>Poetic Context:</strong> Overview of Mongolian poetic tradition and Chimid's place within it</li>
+                        <li><strong>Analysis — Structure:</strong> Examination of stanza form, line length, enjambment, and rhythm in selected poems</li>
+                        <li><strong>Analysis — Diction:</strong> Close reading of word choice, repetition, and tonal shifts related to loss</li>
+                        <li><strong>Synthesis:</strong> How structure and diction work together to create emotional and thematic impact</li>
+                        <li><strong>Conclusion:</strong> Evaluation of Chimid's craft; reflection on scope and limitations</li>
+                    </ol></div>
+                </details>
+            </div>
+        </div>
+
+        <div class="checklist-mini reveal">
+            <h4>✅ What makes a good Mongolian A research question?</h4>
+            <ul>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Focuses on specific literary texts or a defined body of work</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Engages with language, form, style, or cultural context</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Allows for close textual analysis, not just summary</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Connects literary techniques to broader themes or arguments</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Manageable scope for 4,000 words (2–3 texts recommended)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== English B Detail ==================== -->
+<div id="english" class="subject-detail">
+    <div class="container">
+        <div class="detail-header reveal">
+            <span class="emoji">🌍</span>
+            <h2>English B — Language Acquisition</h2>
+        </div>
+        <p class="detail-intro reveal">
+            An English B Extended Essay investigates the English language in its cultural, social, or media context. The best essays go beyond description to critically analyze how language functions in real-world situations — whether in advertising, translation, digital communication, or cross-cultural encounters.
+        </p>
+
+        <div class="rq-label reveal english-color">
+            <span class="dot bg-english"></span> Example Research Questions
+        </div>
+        <div class="rq-grid">
+            <div class="rq-card border-english reveal reveal-delay-1">
+                <div class="rq-num english-color">RQ 1 — Media & Language</div>
+                <p>"How do British and American news outlets differ in their use of persuasive language when reporting on climate change? (Analysis of 20 articles from 2023–2024)"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> RQ, rationale, selection criteria for the 20 articles (10 British, 10 American)</li>
+                        <li><strong>Theoretical Framework:</strong> Persuasive language techniques — rhetorical appeals, framing, loaded language</li>
+                        <li><strong>Methodology:</strong> Corpus selection, analytical categories, comparison method</li>
+                        <li><strong>Analysis — British Outlets:</strong> Patterns in tone, word choice, and persuasive strategies</li>
+                        <li><strong>Analysis — American Outlets:</strong> Patterns and comparison with British findings</li>
+                        <li><strong>Discussion:</strong> Why differences exist — cultural, political, and editorial contexts</li>
+                        <li><strong>Conclusion:</strong> Summary of key differences; implications for media literacy</li>
+                    </ol></div>
+                </details>
+            </div>
+            <div class="rq-card border-english reveal reveal-delay-2">
+                <div class="rq-num english-color">RQ 2 — Translation</div>
+                <p>"To what extent does the English subtitle translation of the Mongolian film <em>The Steppe</em> preserve the cultural connotations of the original dialogue?"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> RQ, significance of subtitling for cross-cultural understanding, film overview</li>
+                        <li><strong>Theoretical Framework:</strong> Audiovisual translation theory — subtitling constraints, cultural equivalence</li>
+                        <li><strong>Methodology:</strong> Selection of 15–20 dialogue excerpts with cultural significance</li>
+                        <li><strong>Analysis — Preserved Connotations:</strong> Examples where subtitles successfully convey cultural meaning</li>
+                        <li><strong>Analysis — Lost Connotations:</strong> Examples where cultural nuance is reduced or altered</li>
+                        <li><strong>Conclusion:</strong> Evaluation of preservation extent; recommendations for culturally sensitive subtitling</li>
+                    </ol></div>
+                </details>
+            </div>
+            <div class="rq-card border-english reveal reveal-delay-3">
+                <div class="rq-num english-color">RQ 3 — Sociolinguistics</div>
+                <p>"How has the use of English slang on Mongolian social media platforms evolved between 2020 and 2024, and what does this reveal about language attitudes among young Mongolians?"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> RQ, context of English influence on Mongolian youth language</li>
+                        <li><strong>Literature Review:</strong> Sociolinguistic theories on borrowing, code-mixing, and language attitudes</li>
+                        <li><strong>Methodology:</strong> Data collection from social media posts (2020 vs. 2024 samples), categorization system</li>
+                        <li><strong>Analysis — Evolution:</strong> Frequency, types, and contexts of English slang usage over the period</li>
+                        <li><strong>Analysis — Attitudes:</strong> What usage patterns reveal about prestige, identity, and globalization</li>
+                        <li><strong>Conclusion:</strong> Summary of trends; reflection on implications for Mongolian language and identity</li>
+                    </ol></div>
+                </details>
+            </div>
+            <div class="rq-card border-english reveal reveal-delay-4">
+                <div class="rq-num english-color">RQ 4 — Culture & Identity</div>
+                <p>"In what ways does code-switching between English and Mongolian in bilingual classrooms reflect students' cultural identity? (A study of 15 students in Ulaanbaatar)"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> RQ, bilingual education context in Ulaanbaatar, significance of code-switching</li>
+                        <li><strong>Theoretical Framework:</strong> Code-switching theories, cultural identity and language choice</li>
+                        <li><strong>Methodology:</strong> Participant selection (n=15), observation protocol, interview design</li>
+                        <li><strong>Analysis — Classroom Observations:</strong> When and why students switch languages during lessons</li>
+                        <li><strong>Analysis — Interview Findings:</strong> Students' self-reported reasons and identity reflections</li>
+                        <li><strong>Discussion:</strong> How code-switching patterns map to cultural identity dimensions</li>
+                        <li><strong>Conclusion:</strong> Key findings on identity expression; limitations and further research directions</li>
+                    </ol></div>
+                </details>
+            </div>
+        </div>
+
+        <div class="checklist-mini reveal">
+            <h4>✅ What makes a good English B research question?</h4>
+            <ul>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Investigates language in a specific cultural or social context</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Uses a clearly defined corpus (number of texts, time period, source)</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Goes beyond description — analyzes patterns, effects, or implications</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Connects to broader themes (identity, globalization, power, media influence)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== Business Management Detail ==================== -->
+<div id="business" class="subject-detail">
+    <div class="container">
+        <div class="detail-header reveal">
+            <span class="emoji">📊</span>
+            <h2>Business Management</h2>
+        </div>
+        <p class="detail-intro reveal">
+            A Business Management Extended Essay applies business theory and analytical tools to a real organization or market situation. The strongest essays use primary and secondary data to evaluate strategies, measure performance, or assess impact — always grounding the analysis in recognized business frameworks.
+        </p>
+
+        <div class="rq-label reveal business-color">
+            <span class="dot bg-business"></span> Example Research Questions
+        </div>
+        <div class="rq-grid">
+            <div class="rq-card border-business reveal reveal-delay-1">
+                <div class="rq-num business-color">RQ 1 — Financial Performance</div>
+                <p>"To what extent has Gobi Cashmere's vertical integration strategy improved its profitability over the period 2019–2024? (Using ratio analysis of published financial statements)"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> RQ, company background, significance of vertical integration in the cashmere industry</li>
+                        <li><strong>Theoretical Framework:</strong> Vertical integration theory, profitability ratios (gross margin, net margin, ROE)</li>
+                        <li><strong>Methodology:</strong> Secondary data from published financial statements 2019–2024, ratio analysis approach</li>
+                        <li><strong>Analysis — Financial Ratios:</strong> Year-by-year ratio calculations, trend identification, and graphical presentation</li>
+                        <li><strong>Analysis — Strategic Link:</strong> Connecting ratio changes to specific integration decisions (e.g. own-retail expansion)</li>
+                        <li><strong>Evaluation:</strong> Strengths and limitations of ratio analysis; external factors (COVID, commodity prices)</li>
+                        <li><strong>Conclusion:</strong> Extent of profitability improvement; strategic recommendations</li>
+                    </ol></div>
+                </details>
+            </div>
+            <div class="rq-card border-business reveal reveal-delay-2">
+                <div class="rq-num business-color">RQ 2 — Marketing</div>
+                <p>"How effective is social media marketing in driving customer engagement for small food and beverage businesses in Ulaanbaatar? (A survey of 80 customers and 5 businesses)"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> RQ, growth of social media marketing among Mongolian SMEs, research rationale</li>
+                        <li><strong>Theoretical Framework:</strong> Customer engagement theory, AIDA model, digital marketing metrics</li>
+                        <li><strong>Methodology:</strong> Survey design (n=80 customers), interview protocol (5 business owners), sampling method</li>
+                        <li><strong>Analysis — Customer Perspective:</strong> Survey results on engagement behaviors (likes, shares, purchases)</li>
+                        <li><strong>Analysis — Business Perspective:</strong> Owner insights on strategy, ROI, and challenges</li>
+                        <li><strong>Discussion:</strong> Cross-analysis of both perspectives; effectiveness evaluation</li>
+                        <li><strong>Conclusion:</strong> Key findings on effectiveness; practical recommendations for Mongolian SMEs</li>
+                    </ol></div>
+                </details>
+            </div>
+            <div class="rq-card border-business reveal reveal-delay-3">
+                <div class="rq-num business-color">RQ 3 — Mergers & Acquisitions</div>
+                <p>"What was the impact of Khan Bank's acquisition of XacBank's microfinance division on its market share and customer satisfaction between 2021 and 2023?"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> RQ, overview of the acquisition, significance in Mongolian banking sector</li>
+                        <li><strong>Theoretical Framework:</strong> M&amp;A impact theory, market share analysis, customer satisfaction models</li>
+                        <li><strong>Methodology:</strong> Secondary data (market reports, financial disclosures) and primary data (customer survey)</li>
+                        <li><strong>Analysis — Market Share:</strong> Pre- and post-acquisition market share data, trend comparison with competitors</li>
+                        <li><strong>Analysis — Customer Satisfaction:</strong> Survey findings on service quality, accessibility, and loyalty post-merger</li>
+                        <li><strong>Evaluation:</strong> Synergies achieved vs. integration challenges; limitations of available data</li>
+                        <li><strong>Conclusion:</strong> Overall impact assessment; lessons for future M&amp;A in Mongolian finance</li>
+                    </ol></div>
+                </details>
+            </div>
+            <div class="rq-card border-business reveal reveal-delay-4">
+                <div class="rq-num business-color">RQ 4 — Human Resources</div>
+                <p>"To what extent does employee motivation at MCS Group's retail outlets depend on non-financial incentives? (A study using Herzberg's Two-Factor Theory, n=60 employees)"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> RQ, MCS Group overview, importance of motivation in retail workforce</li>
+                        <li><strong>Theoretical Framework:</strong> Herzberg's Two-Factor Theory (hygiene factors vs. motivators), comparison with Maslow</li>
+                        <li><strong>Methodology:</strong> Questionnaire design based on Herzberg, sampling (n=60), Likert scale analysis</li>
+                        <li><strong>Analysis — Hygiene Factors:</strong> Employee responses on salary, conditions, and job security</li>
+                        <li><strong>Analysis — Motivators:</strong> Employee responses on recognition, responsibility, achievement, and growth</li>
+                        <li><strong>Discussion:</strong> Relative importance of non-financial vs. financial incentives; comparison with theory</li>
+                        <li><strong>Conclusion:</strong> Extent of dependence on non-financial incentives; HR recommendations for MCS Group</li>
+                    </ol></div>
+                </details>
+            </div>
+        </div>
+
+        <div class="checklist-mini reveal">
+            <h4>✅ What makes a good Business Management research question?</h4>
+            <ul>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Based on a real, named organization with accessible data</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Specifies a clear time frame and scope</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Uses recognized business tools or frameworks (SWOT, ratio analysis, Herzberg, etc.)</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Includes primary and/or secondary data sources</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Avoids overly broad questions — focuses on one aspect of business performance</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== Biology Detail ==================== -->
+<div id="biology" class="subject-detail">
+    <div class="container">
+        <div class="detail-header reveal">
+            <span class="emoji">🔬</span>
+            <h2>Biology</h2>
+        </div>
+        <p class="detail-intro reveal">
+            A Biology Extended Essay is built around a well-designed experiment or data-based investigation. The strongest essays identify clear independent and dependent variables, use appropriate controls, collect sufficient data (adequate sample size and trials), and apply statistical analysis to draw evidence-based conclusions.
+        </p>
+
+        <div class="rq-label reveal biology-color">
+            <span class="dot bg-biology"></span> Example Research Questions
+        </div>
+        <div class="rq-grid">
+            <div class="rq-card border-biology reveal reveal-delay-1">
+                <div class="rq-num biology-color">RQ 1 — Plant Biology</div>
+                <p>"What is the effect of varying concentrations of NaCl solution (0%, 1%, 3%, 5%, 7%) on the germination rate of wheat (<em>Triticum aestivum</em>) seeds over 10 days? (n=30 seeds per group, 3 trials)"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> RQ, biological context of salt stress on germination, hypothesis</li>
+                        <li><strong>Background:</strong> Literature on osmotic stress, water potential, and seed germination physiology</li>
+                        <li><strong>Methodology:</strong> Experimental setup — 5 NaCl concentrations, n=30 seeds per group, 3 trials, controlled variables (temperature, light, water volume), 10-day observation period</li>
+                        <li><strong>Results:</strong> Raw data tables, germination rate calculations, mean &amp; standard deviation, graphs (bar chart / line graph)</li>
+                        <li><strong>Analysis &amp; Discussion:</strong> Statistical analysis (t-test or ANOVA), trend interpretation, comparison with published literature, explanation of biological mechanism</li>
+                        <li><strong>Evaluation:</strong> Limitations (seed batch variation, sample size), systematic and random errors, suggested improvements</li>
+                        <li><strong>Conclusion:</strong> Answer to RQ, extent of salt concentration effect, ecological relevance</li>
+                    </ol></div>
+                </details>
+            </div>
+            <div class="rq-card border-biology reveal reveal-delay-2">
+                <div class="rq-num biology-color">RQ 2 — Microbiology</div>
+                <p>"To what extent do garlic extract, honey, and green tea inhibit the growth of <em>E. coli</em> bacteria in vitro, as measured by zone of inhibition over 48 hours? (5 replicates per treatment)"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> RQ, context on antibiotic resistance and natural antimicrobials, hypothesis</li>
+                        <li><strong>Background:</strong> Literature on antimicrobial properties of garlic (allicin), honey (osmolarity, pH), and green tea (catechins)</li>
+                        <li><strong>Methodology:</strong> Agar disc diffusion method, extract preparation, positive &amp; negative controls, 5 replicates, measurement at 24h and 48h</li>
+                        <li><strong>Results:</strong> Zone of inhibition data tables, mean diameter per treatment, standard deviation, photographic evidence, comparative bar graphs</li>
+                        <li><strong>Analysis &amp; Discussion:</strong> Statistical comparison across treatments, ranking of effectiveness, biological mechanisms, comparison with published MIC values</li>
+                        <li><strong>Evaluation:</strong> Limitations (extract concentration standardization, single bacterial strain), reliability of replicates, ethical considerations</li>
+                        <li><strong>Conclusion:</strong> Comparative effectiveness summary, implications for natural antimicrobial use</li>
+                    </ol></div>
+                </details>
+            </div>
+            <div class="rq-card border-biology reveal reveal-delay-3">
+                <div class="rq-num biology-color">RQ 3 — Ecology</div>
+                <p>"How does distance from the Tuul River (0m, 50m, 100m, 200m) affect soil invertebrate diversity in the Bogd Khan Mountain area during September 2025? (Pitfall traps, n=5 per site)"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> RQ, ecological importance of riparian zones, hypothesis on diversity gradient</li>
+                        <li><strong>Background:</strong> Literature on riparian ecology, soil moisture gradients, invertebrate biodiversity indices</li>
+                        <li><strong>Methodology:</strong> Site selection (4 distances), pitfall trap design, n=5 traps per site, 72-hour collection period, species identification protocol, Simpson's Diversity Index</li>
+                        <li><strong>Results:</strong> Species count per site, abundance data, diversity index calculations, data tables and graphs</li>
+                        <li><strong>Analysis &amp; Discussion:</strong> Diversity trends vs. distance, statistical significance, correlation with soil moisture, comparison with similar riparian studies</li>
+                        <li><strong>Evaluation:</strong> Limitations (seasonal timing, trap bias, identification accuracy), weather variables, improvements for future study</li>
+                        <li><strong>Conclusion:</strong> Relationship between river proximity and invertebrate diversity; ecological significance</li>
+                    </ol></div>
+                </details>
+            </div>
+            <div class="rq-card border-biology reveal reveal-delay-4">
+                <div class="rq-num biology-color">RQ 4 — Human Physiology</div>
+                <p>"What is the effect of 15 minutes of aerobic exercise versus anaerobic exercise on blood glucose levels in healthy volunteers aged 16–18? (n=20 participants, measured at 0, 15, 30, and 60 minutes)"</p>
+                <details>
+                    <summary><span class="arrow">&#9654;</span> EE Structure</summary>
+                    <div class="ee-structure"><ol>
+                        <li><strong>Introduction:</strong> RQ, physiological basis of exercise and glucose metabolism, hypothesis</li>
+                        <li><strong>Background:</strong> Literature on aerobic vs. anaerobic energy pathways, insulin response, glycogenolysis, and blood glucose regulation</li>
+                        <li><strong>Methodology:</strong> Participant selection (n=20, ages 16–18), exercise protocols (15 min jogging vs. 15 min sprints), glucometer measurements at 0, 15, 30, 60 min, controlled variables (fasting state, time of day), ethical consent</li>
+                        <li><strong>Results:</strong> Blood glucose readings per participant, mean values at each time point, standard deviation, line graphs showing glucose trends over time</li>
+                        <li><strong>Analysis &amp; Discussion:</strong> Comparison of glucose curves between exercise types, t-test at each time point, biological explanation of observed differences</li>
+                        <li><strong>Evaluation:</strong> Limitations (individual metabolic variation, small sample size, glucose meter precision), ethical considerations, suggested improvements</li>
+                        <li><strong>Conclusion:</strong> Comparative effect of exercise types on glucose; relevance to health and sports science</li>
+                    </ol></div>
+                </details>
+            </div>
+        </div>
+
+        <div class="checklist-mini reveal">
+            <h4>✅ What makes a good Biology research question?</h4>
+            <ul>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Clearly identifies independent and dependent variables</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Specifies measurable outcomes and units</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Includes sample size (n=), trials, and time frame</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Uses a realistic and ethical experimental design</li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Controls for confounding variables</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== General Checklist ==================== -->
+<section id="checklist">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>What Makes a Good EE Research Question?</h2>
+            <p>A universal checklist that applies across all subjects — use this to evaluate and refine your research question.</p>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="checklist-grid">
+            <div class="checklist-item reveal reveal-delay-1">
+                <div class="checklist-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+                </div>
+                <div>
+                    <h4>Clear & Focused</h4>
+                    <p>Not too broad — narrowed to a specific topic, text, time period, or case study that can be thoroughly explored.</p>
+                </div>
+            </div>
+            <div class="checklist-item reveal reveal-delay-2">
+                <div class="checklist-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><circle cx="12" cy="12" r="10"/><path d="M12 17h.01"/></svg>
+                </div>
+                <div>
+                    <h4>Analytical</h4>
+                    <p>Not a yes/no question — uses "To what extent", "How", or "In what ways" to invite critical analysis and evaluation.</p>
+                </div>
+            </div>
+            <div class="checklist-item reveal reveal-delay-3">
+                <div class="checklist-icon">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                </div>
+                <div>
+                    <h4>Measurable</h4>
+                    <p>Defines boundaries — a time period, number of texts, variables, sample size, or dataset that can be concretely analyzed.</p>
+                </div>
+            </div>
+            <div class="checklist-item reveal reveal-delay-1">
+                <div class="checklist-icon">
+                    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                </div>
+                <div>
+                    <h4>Researchable</h4>
+                    <p>Data, sources, texts, or experimental setups are realistically available and accessible to the student.</p>
+                </div>
+            </div>
+            <div class="checklist-item reveal reveal-delay-2">
+                <div class="checklist-icon">
+                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <div>
+                    <h4>Subject-Appropriate</h4>
+                    <p>Fits the methodology and expectations of the chosen subject — literary analysis for Mongolian A, experiments for Biology, case studies for Business.</p>
+                </div>
+            </div>
+            <div class="checklist-item reveal reveal-delay-3">
+                <div class="checklist-icon">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+                <div>
+                    <h4>Manageable in 4,000 Words</h4>
+                    <p>The scope allows for depth, not just breadth — it's better to say a lot about a little than a little about a lot.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== Footer ==================== -->
+<footer>
+    <div class="container">
+        <p><strong>IBDP Extended Essay Showcase</strong> — Open Day 2025</p>
+        <p style="margin-top:8px;">Celebrating academic excellence in independent research.</p>
+    </div>
+</footer>
+
+<!-- ==================== JavaScript ==================== -->
+<script>
+    // ===== Mobile Navigation Toggle =====
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+        const spans = navToggle.querySelectorAll('span');
+        if (navLinks.classList.contains('open')) {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        } else {
+            spans[0].style.transform = '';
+            spans[1].style.opacity = '';
+            spans[2].style.transform = '';
+        }
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            const spans = navToggle.querySelectorAll('span');
+            spans[0].style.transform = '';
+            spans[1].style.opacity = '';
+            spans[2].style.transform = '';
+        });
+    });
+
+    // ===== Navbar scroll shadow =====
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // ===== Scroll reveal =====
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // ===== Typing animation =====
+    const phrases = ['Research.', 'Write.', 'Reflect.', 'Showcase.'];
+    const typingEl = document.getElementById('typingLine');
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let currentText = '';
+
+    function typeLoop() {
+        const phrase = phrases[phraseIndex];
+
+        if (!isDeleting) {
+            currentText = phrase.substring(0, charIndex + 1);
+            charIndex++;
+        } else {
+            currentText = phrase.substring(0, charIndex - 1);
+            charIndex--;
+        }
+
+        typingEl.innerHTML = currentText + '<span class="typing-cursor"></span>';
+
+        let delay = isDeleting ? 40 : 80;
+
+        if (!isDeleting && charIndex === phrase.length) {
+            delay = 1800;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            delay = 400;
+        }
+
+        setTimeout(typeLoop, delay);
+    }
+
+    typeLoop();
+
+    // ===== Rolling text animation =====
+    const rollerTrack = document.getElementById('rollerTrack');
+    const rollerWords = rollerTrack.querySelectorAll('.roller-word');
+    let rollerIndex = 0;
+
+    setInterval(() => {
+        rollerIndex = (rollerIndex + 1) % rollerWords.length;
+        rollerTrack.style.transform = 'translateY(-' + (rollerIndex * 1.15) + 'em)';
+    }, 2500);
+</script>
+</body>
+</html>
